@@ -9,12 +9,14 @@ namespace GradeSystemApp
 {
     public class GradeDefinition
     {
+        public int GD_id { get; set; }
         public int Min { get; set; }
         public int Max { get; set; }
         public string Grade { get; set; }
 
-        public GradeDefinition(int minMark, int maxMark, string Grade)
+        public GradeDefinition(int gd_id, int minMark, int maxMark, string Grade)
         {
+            this.GD_id = gd_id;
             this.Min = minMark;
             this.Max = maxMark;
             this.Grade = Grade;
@@ -36,7 +38,7 @@ namespace GradeSystemApp
 
                 while (reader.Read())
                 {
-                    gradeInfoList.Add(new GradeDefinition(Convert.ToInt32(reader["Min"]), Convert.ToInt32(reader["Max"]), reader["Grade"].ToString()));
+                    gradeInfoList.Add(new GradeDefinition(Convert.ToInt32(reader["GD_id"]), Convert.ToInt32(reader["Min"]), Convert.ToInt32(reader["Max"]), reader["Grade"].ToString()));
                 }
                 reader.Close();
                 con.Close();

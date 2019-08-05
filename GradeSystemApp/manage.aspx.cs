@@ -25,7 +25,8 @@ namespace GradeSystemApp
 
         protected void view_Click(object sender, EventArgs e)
         {
-            Response.Redirect("view.aspx");
+            string id = Request.QueryString["Id"];
+            Response.Redirect("view.aspx?Id=" + id);
         }
 
         public string conString = System.Configuration.ConfigurationManager.ConnectionStrings["GradeInfoConnectionString"].ConnectionString;
@@ -101,7 +102,23 @@ namespace GradeSystemApp
 
         protected void MaxValidation(object source, ServerValidateEventArgs args)
         {
+
             CustomValidator valid = source as CustomValidator;
+
+            //List<GradeSystem> gradeSystemList = GradeSystem.GetGradeSystemList();
+            //int id = Convert.ToInt32(Request.QueryString["Id"]);
+            //foreach (var obj in gradeSystemList)
+            //{
+            //    if (obj.GS_id == id)
+            //    {
+            //        if (Convert.ToInt32(args.Value) > obj.maxMark)
+            //        {
+            //            args.IsValid = false;
+            //            valid.ErrorMessage = "Maximum Mark defined for this Gradesystem is" + obj.maxMark;
+            //        }
+            //    }
+            //}
+
             int number;
             bool isNumber = int.TryParse(args.Value, out number);
 

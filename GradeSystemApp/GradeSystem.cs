@@ -9,11 +9,13 @@ namespace GradeSystemApp
 {
     public class GradeSystem
     {
+        public int GS_id;
         public string tilte { get; set; }
         public int maxMark { get; set; }
 
-        public GradeSystem(string Title, int MaxMark)
+        public GradeSystem(int gs_id, string Title, int MaxMark)
         {
+            this.GS_id = gs_id;
             this.tilte = Title;
             this.maxMark = MaxMark;
         }
@@ -32,7 +34,7 @@ namespace GradeSystemApp
 
                 while (reader.Read())
                 {
-                    gradeSystemList.Add(new GradeSystem(reader["GradeSystemName"].ToString(), Convert.ToInt32(reader["MaxMark"])));
+                    gradeSystemList.Add(new GradeSystem(Convert.ToInt32(reader["GS_id"]), reader["GradeSystemName"].ToString(), Convert.ToInt32(reader["MaxMark"])));
                 }
                 reader.Close();
                 con.Close();

@@ -28,7 +28,7 @@
                                 <asp:Button ID="manage" runat="server" Text="Manage" CommandArgument='<%#Eval("GS_id")%>' onClick="manage_Click" />
                             </td>
                             <td>
-                                <asp:Button ID="delete" runat="server" Text="Delete" CommandArgument='<%#Eval("GS_id")%>' OnClick="DeleteRow" />
+                                <asp:Button ID="delete" runat="server" Text="Delete" CommandArgument='<%#Eval("GS_id")%>' OnClientClick = "return confirm('Are you sure?');" OnClick="DeleteRow" />
                             </td>
                         </tr>
                     </table>
