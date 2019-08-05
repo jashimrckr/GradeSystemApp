@@ -38,7 +38,7 @@ namespace GradeSystemApp
         protected void manage_Click(object sender, EventArgs e)
         {
             string id = (sender as Button).CommandArgument;
-            Response.Redirect("manage.aspx?Id="+id);
+            Response.Redirect("manage.aspx?Id=" + id);
         }
 
         public string conString = System.Configuration.ConfigurationManager.ConnectionStrings["GradeInfoConnectionString"].ConnectionString;

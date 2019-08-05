@@ -10,12 +10,25 @@ namespace GradeSystemApp
     public partial class manage : System.Web.UI.Page
     {
         List<GradeDefinition> gradeInfoList;
+        List<GradeSystem> gradeSystemList;
+        int id;
+        int maxMark;
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            int id = Convert.ToInt32(Request.QueryString["Id"]);
+            id = Convert.ToInt32(Server.UrlDecode(Request.QueryString["Id"]));
             gradeInfoList = GradeDefinition.GetGradeList(id);
+            gradeSystemList = GradeSystem.GetGradeSystemList();
 
+            
+            foreach (var obj in gradeSystemList)
+            {
+                if (obj.GS_id == id)
+                {
+                    maxMark = obj.maxMark;
+                    heading.Text = obj.tilte;                
+                }
+            }
         }
 
         protected void home_Click(object sender, EventArgs e)
@@ -25,8 +38,7 @@ namespace GradeSystemApp
 
         protected void view_Click(object sender, EventArgs e)
         {
-            string id = Request.QueryString["Id"];
-            Response.Redirect("view.aspx?Id=" + id);
+            Response.Redirect("view.aspx?Id=" + id.ToString());
         }
 
         public string conString = System.Configuration.ConfigurationManager.ConnectionStrings["GradeInfoConnectionString"].ConnectionString;
@@ -36,7 +48,6 @@ namespace GradeSystemApp
             if (Page.IsValid)
             {
 
-                int id = Convert.ToInt32(Request.QueryString["Id"]);
                 int entered_min = Convert.ToInt32(min.Text);
                 int entered_max = Convert.ToInt32(max.Text);
                 string entered_grade = grade.Text.ToUpper();
@@ -104,27 +115,17 @@ namespace GradeSystemApp
         {
 
             CustomValidator valid = source as CustomValidator;
-
-            //List<GradeSystem> gradeSystemList = GradeSystem.GetGradeSystemList();
-            //int id = Convert.ToInt32(Request.QueryString["Id"]);
-            //foreach (var obj in gradeSystemList)
-            //{
-            //    if (obj.GS_id == id)
-            //    {
-            //        if (Convert.ToInt32(args.Value) > obj.maxMark)
-            //        {
-            //            args.IsValid = false;
-            //            valid.ErrorMessage = "Maximum Mark defined for this Gradesystem is" + obj.maxMark;
-            //        }
-            //    }
-            //}
-
+      
             int number;
             bool isNumber = int.TryParse(args.Value, out number);
-
+   
             if (isNumber || args.Value != "")
-            {
-                args.IsValid = true;
+            {   
+                if (number > maxMark)
+                {
+                    args.IsValid = false;
+                    valid.ErrorMessage = "Maximum Mark defined for this Grade System is " + maxMark;
+                }
             }
             else
             {

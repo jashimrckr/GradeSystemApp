@@ -20,27 +20,27 @@
                     <asp:Button runat="server" Text="Add" OnClick="add_Click"/>
                 </div>
             </div>
-            
 
-            <asp:GridView ID="GridView1" runat="server" 
+            <p><asp:Label runat="server" ID="heading"></asp:Label></p>
+
+            <asp:GridView ID="GridView1" runat="server"
                 AutoGenerateColumns="false"
-                BackColor="#DEBA84" BorderColor="#DEBA84" 
-                BorderStyle="None" BorderWidth="1px" 
-                CellPadding="3" CellSpacing="2" 
-               >
+                BackColor="#DEBA84" BorderColor="#DEBA84"
+                BorderStyle="None" BorderWidth="1px"
+                CellPadding="3" CellSpacing="2">
                 <Columns>
-  
-                <asp:BoundField DataField="Min" HeaderText="Min" SortExpression="Min" />
-                <asp:BoundField DataField="Max" HeaderText="Max" SortExpression="Max" />
-                <asp:BoundField DataField="Grade" HeaderText="Grade" SortExpression="Grade" />
 
-                <asp:TemplateField>
-                    <ItemTemplate>
-                        <asp:Button ID="delete_btn" Text="Delete" runat="server" CommandArgument='<%# Eval("GD_id") %>' OnClick="delete_btn_Click"></asp:Button>
-                    </ItemTemplate>
-                </asp:TemplateField>
+                    <asp:BoundField DataField="Min" HeaderText="Min" SortExpression="Min" />
+                    <asp:BoundField DataField="Max" HeaderText="Max" SortExpression="Max" />
+                    <asp:BoundField DataField="Grade" HeaderText="Grade" SortExpression="Grade" />
 
-            </Columns>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Button ID="delete_btn" Text="Delete" runat="server" CommandArgument='<%# Eval("GD_id") %>' OnClick="delete_btn_Click"></asp:Button>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                </Columns>
 
                 <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
                 <HeaderStyle BackColor="#A55129" Font-Bold="True" ForeColor="White" />

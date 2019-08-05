@@ -76,5 +76,23 @@ namespace GradeSystemApp
                 return true;
             }
         }
+
+        public static void DeleteGradeDefinition(int id)
+        {
+            string conString = System.Configuration.ConfigurationManager.ConnectionStrings["GradeInfoConnectionString"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand("Proc_GradeDefinition_DeleteRow", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@GD_id", SqlDbType.Int);
+                cmd.Parameters["@GD_id"].Value = id;
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+
+        }
     }
 }

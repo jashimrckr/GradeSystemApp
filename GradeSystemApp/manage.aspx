@@ -10,6 +10,7 @@
 <body>
     <form runat="server">
         <div class="gradeSystemBlock">
+            
             <div style="display: flex">
                 <div>
                     <asp:Button runat="server" Text="Home" OnClick="home_Click" />
@@ -19,7 +20,7 @@
                     <asp:Button runat="server" Text="View" OnClick="view_Click" />
                 </div>
             </div>
-
+            
             <p>
                 <asp:ValidationSummary ID="ValidationSummaryErrors" HeaderText="Validation Errors" runat="server" ForeColor="Red" />
             </p>
@@ -27,6 +28,8 @@
             <p>
                 <asp:Label ID="data_status" runat="server" ForeColor="Red"></asp:Label>
             </p>
+
+            <p><asp:Label runat="server" ID="heading"></asp:Label></p>
 
             <table>
 
