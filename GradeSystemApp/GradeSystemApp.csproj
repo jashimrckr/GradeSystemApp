@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="add.aspx" />
     <Content Include="Home.aspx" />
+    <Content Include="JavaScript.js" />
     <Content Include="manage.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">

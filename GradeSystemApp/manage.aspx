@@ -6,11 +6,12 @@
 <head runat="server">
     <title>Grade Details</title>
     <link rel="stylesheet" href="StyleSheet.css" type="text/css" />
+    <script src="JavaScript.js" type="text/javascript"></script>
 </head>
 <body>
     <form runat="server">
         <div class="gradeSystemBlock">
-            
+
             <div style="display: flex">
                 <div>
                     <asp:Button runat="server" Text="Home" OnClick="home_Click" />
@@ -20,63 +21,40 @@
                     <asp:Button runat="server" Text="View" OnClick="view_Click" />
                 </div>
             </div>
-            
+
             <p>
-                <asp:ValidationSummary ID="ValidationSummaryErrors" HeaderText="Validation Errors" runat="server" ForeColor="Red" />
+                <asp:Label ID="validation_status" runat="server" ForeColor="Red"></asp:Label>
             </p>
 
             <p>
                 <asp:Label ID="data_status" runat="server" ForeColor="Red"></asp:Label>
             </p>
 
-            <p><asp:Label runat="server" ID="heading"></asp:Label></p>
-
-            <table>
-
-                <tr>
-                    <td class="data-cells">
-
-                        <asp:Label ID="minLabel" runat="server" Text="Min"></asp:Label>
-                        <asp:TextBox ID="min" runat="server" ToolTip="Enter Minimum Mark"></asp:TextBox>
-                        <asp:CustomValidator ID="CustomValidatorMin" runat="server"
-                            ControlToValidate="min"
-                            OnServerValidate="MinValidation"
-                            ValidateEmptyText="true">*</asp:CustomValidator>
-                    </td>
-
-                    <td class="data-cells">
-                        <asp:Label ID="maxLabel" runat="server" Text="Max"></asp:Label>
-                        <asp:TextBox ID="max" runat="server" ToolTip="Enter Maximum Mark"></asp:TextBox>
-                        <asp:CustomValidator ID="CustomValidatorMax" runat="server"
-                            ControlToValidate="max"
-                            OnServerValidate="MaxValidation"
-                            ValidateEmptyText="true">*</asp:CustomValidator>
-                        <asp:CompareValidator ID="CompareMinMax" runat="server"
-                            ErrorMessage="Maximum mark should be greater than Minimum Mark"
-                            ControlToValidate="max"
-                            ControlToCompare="min"
-                            Operator="GreaterThan"
-                            Type="Integer">*</asp:CompareValidator>
-                    </td>
-
-                    <td class="data-cells">
-                        <asp:Label ID="gradeLabel" runat="server" Text="Grade"></asp:Label>
-                        <asp:TextBox ID="grade" runat="server" ToolTip="Enter Grade"></asp:TextBox>
-                        <asp:CustomValidator ID="CustomValidatorGrade" runat="server"
-                            ControlToValidate="grade"
-                            OnServerValidate="GradeValidation"
-                            ValidateEmptyText="true">*</asp:CustomValidator>
-                    </td>
-
-                </tr>
-
-            </table>
-
-
             <p>
-                <asp:Button ID="save" runat="server" Text="Save" OnClick="save_Click" />
+                <asp:Label runat="server" ID="heading"></asp:Label>
             </p>
 
+            <div>
+                <table id="tblPets" class="custom-tablePopup">
+                    <tr>
+                        <th>Min</th>
+                        <th>Max</th>
+                        <th>Grade</th>
+                        <th></th>
+                    </tr>
+
+                    <tr>
+                        <td><input type="number" id="min0" name="minInput" /></td>
+                        <td><input type="number" id="max0" name="maxInput" /></td>
+                        <td><input type="text" id="grade0" name="gradeInput" /></td> 
+                        <td><input type="button" id="addButton0" value="+" onclick="addRow('tblPets')" /></td>       
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+                <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
+            </div>
         </div>
     </form>
 </body>

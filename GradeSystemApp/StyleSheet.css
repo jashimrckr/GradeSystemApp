@@ -1,9 +1,11 @@
 ﻿.gradeSystemBlock {
-    font-family: "Helvetica Neue" , "Lucida Grande" , "Segoe UI";
+    font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI";
     color: #696969;
-    max-width:380px;
+    max-width: 500px;
     margin: auto;
 }
-.data-cells input{
+
+.data-cells input {
     width: 50px;
 }
+

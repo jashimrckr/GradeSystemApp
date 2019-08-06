@@ -41,14 +41,16 @@ namespace GradeSystemApp
         }
 
         protected void add_Click(object sender, EventArgs e)
-        {  
-            Response.Redirect("manage.aspx?Id=" + id.ToString());
+        {
+            string id = Request.QueryString["Id"];
+            Response.Redirect("manage.aspx?Id="+id);
         }
 
         protected void delete_btn_Click(object sender, EventArgs e)
         {
             int GD_id = Convert.ToInt32((sender as Button).CommandArgument);
             GradeDefinition.DeleteGradeDefinition(GD_id);
+            string id = Request.QueryString["Id"];
             Response.Redirect("view.aspx?Id=" + id.ToString());
         }
     }

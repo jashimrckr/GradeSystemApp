@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace GradeSystemApp
@@ -47,34 +48,45 @@ namespace GradeSystemApp
             return gradeInfoList;
         }
 
-        public static bool InsertGradeDefinition(int id, int entered_min, int entered_max, string entered_grade)
+     
+
+        public static bool InsertGradeDefinition(DataTable dt)
         {
             string conString = System.Configuration.ConfigurationManager.ConnectionStrings["GradeInfoConnectionString"].ConnectionString;
-            int rowCount = 0;
+   
+
+            StringBuilder sb = new StringBuilder();
+
             using (SqlConnection con = new SqlConnection(conString))
             {
+                using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(con))
+                {
+                    //Set the database table name
+                    sqlBulkCopy.DestinationTableName = "dbo.GradeDefinition";
 
-                SqlCommand cmd = new SqlCommand("Proc_GradeDefinition_InsertGradeDefinition", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add("@GS_id", SqlDbType.Int).Value = id;
-                cmd.Parameters.Add("@Min", SqlDbType.Int).Value = entered_min;
-                cmd.Parameters.Add("@Max", SqlDbType.Int).Value = entered_max;
-                cmd.Parameters.Add("@Grade", SqlDbType.NVarChar).Value = entered_grade;
-            
-
-                con.Open();
-                rowCount = cmd.ExecuteNonQuery();
-                con.Close();
-            }
-            if (rowCount == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+                    //[OPTIONAL]: Map the DataTable columns with that of the database table
+                    sqlBulkCopy.ColumnMappings.Add("gs_id", "GS_id");
+                    sqlBulkCopy.ColumnMappings.Add("minInput", "Min");
+                    sqlBulkCopy.ColumnMappings.Add("maxInput", "Max");
+                    sqlBulkCopy.ColumnMappings.Add("gradeInput", "Grade");
+                    con.Open();
+                    try
+                    {
+                        sqlBulkCopy.WriteToServer(dt);
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return false;
+                    }
+                    finally
+                    {
+                        sqlBulkCopy.Close();
+                        con.Close();
+                    }
+                }
+            } 
         }
 
         public static void DeleteGradeDefinition(int id)
