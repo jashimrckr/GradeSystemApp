@@ -35,25 +35,31 @@ namespace GradeSystemApp
             }
         }
 
+
         protected void btnSave_Click(object sender, EventArgs e)
 
         {
             id = Convert.ToInt32(Server.UrlDecode(Request.QueryString["Id"]));
-
             string[] minInput = Request.Form.GetValues("minInput");
-
             string[] maxInput = Request.Form.GetValues("maxInput");
-
             string[] gradeInput = Request.Form.GetValues("gradeInput");
+
+            bool gradeInputArrValStatus = gradeInputArrVal(gradeInput);
+
+            if (!gradeInputArrValStatus)
+            {
+                return;
+            }
+
 
             DataTable dtable = dt();
 
             for (int i = 0; i <= minInput.Length - 1; i++)
-
             {
                 bool validationStatus = ValidateMinMaxGrade(minInput[i], maxInput[i], gradeInput[i]);
-
-                if (validationStatus)
+                bool minmaxInputValStatus = minmaxInputVal(minInput, maxInput, minInput[i], maxInput[i]);
+               
+                if (validationStatus && minmaxInputValStatus)
                 {
                     DataRow row1 = dtable.NewRow();
                     row1["gs_id"] = id;
@@ -73,14 +79,49 @@ namespace GradeSystemApp
             bool insertStatus = GradeDefinition.InsertGradeDefinition(dtable);
             if (insertStatus)
             {
-                Response.Redirect("view.aspx?Id="+id);
+                Response.Redirect("view.aspx?Id=" + id);
             }
             else
             {
                 validation_status.Text = "Error! Insertion failed";
             }
+            
         }
 
+        protected bool gradeInputArrVal(string[] gradeInput)
+        {
+            if (gradeInput.Distinct().Count() != gradeInput.Count())
+            {
+                validation_status.Text = "Validation Error! Data not Saved";
+                data_status.Text = "Same Grade assigned for different Range";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
+        }
+
+        protected bool minmaxInputVal(string[] minInput, string[] maxInput, string min, string max)
+        {
+            int cmin = Convert.ToInt32(min);
+            int cmax = Convert.ToInt32(max);
+            for (int i = 0; i < minInput.Length; i++)
+            {
+                int imin = Convert.ToInt32(minInput[i]);
+                int imax = Convert.ToInt32(maxInput[i]);
+
+                if ((cmin != imin && cmin >= imin && cmin < imax) || (cmax != imax && cmax > imin && cmax <= imax))
+                {
+                    data_status.Text = "Range interference within entered ranges";
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
 
         protected bool ValidateMinMaxGrade(string minInput, string maxInput, string gradeInput)
         {

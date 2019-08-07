@@ -10,7 +10,7 @@
             <p>
                 <asp:Label ID="data_status" runat="server" ForeColor="Red"></asp:Label>
             </p>
-            <asp:Button ID="add" runat="server" OnClick="addGradeSystem_Click" Style="float: right;" Text="Add new Grade System" />
+            <asp:Button ID="add" runat="server" OnClick="addGradeSystem_Click" Style="float: right;margin-right:115px;" Text="Add new Grade System" />
             <br />
 
             <asp:Repeater ID="gradeSystemRepeater" runat="server">
